@@ -1,10 +1,10 @@
 <template>
-    <div>
-        <router-view />
+    <div class="error">
+        404
     </div>
 </template>
 <script>
 export default {
-    name: 'BlankLayout'
+    name: 'error'
 }
 </script>
