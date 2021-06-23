@@ -57,6 +57,22 @@ export default {
         this.updateMenu()
     },
     methods: {
+        onOpenChange(openKeys) {
+
+            // 在水平模式下时执行，并且不再执行后续
+            if(this.mode === 'horizontal') {
+                this.openKeys = openKeys
+                return
+            }
+
+            // 非水平模式时
+            const latestOpenKey = openKeys.find(key => !this.openKeys.includes(key))
+            if(!this.rootSubmenuKeys.includes(latestOpenKey)) {
+                this.openKeys = openKeys
+            } else {
+                this.openKeys = latestOpenKey ? [latestOpenKey] : []
+            }
+        },
         updateMenu() {
             const routes = this.$route.matched.concat()
             const { hidden } = this.$route.meta
@@ -72,7 +88,81 @@ export default {
                     openKeys.push(item.path)
                 })
             }
+        },
+        renderItem(menu) {
+            if(!menu.isHide) {
+                return menu.children && !menu.alwaysShow ? this.renderSubMenu(menu) : this.renderMenuItem(menu)
+            }
+            return null
+        },
+        renderMenuItem(menu) {
+            const tag = 'router-link'
+            let props = { to: { name: menu.title } }
 
+            const attrs = { href: menu.link }
+
+            return (
+                <Item {...{ key: menu.link }}>
+                    <tag {...{ props, attrs }}>
+                        {this.renderIcon(menu.icon)}
+                        <span>{menu.title}</span>
+                    </tag>
+                </Item>
+            )
+        },
+        renderSubMenu(menu) {
+            const itemArr = []
+            if (!menu.alwaysShow) {
+                menu.children.forEach(item => itemArr.push(this.renderItem(item)))
+            }
+            return (
+                <SubMenu {...{ key: menu.link }}>
+                    <span slot="title">
+                        {this.renderIcon(menu.icon)}
+                        <span>{menu.title}</span>
+                    </span>
+                    {itemArr}
+                </SubMenu>
+            )
+        },
+        renderIcon(icon) {
+            if(icon === 'none' || icon === undefined){
+                return null
+            }
+            const props = {}
+            typeof (icon) === 'object' ? props.component = icon : props.type = icon
+            return (
+                <Icon {...{ props }}></Icon>
+            )
         }
+    }, 
+    render() {
+        const { mode, theme, menu } = this
+        const props = {
+            mode: mode,
+            theme: theme,
+            openKeys: this.openKeys
+        }
+
+        const on = {
+            select: obj => {
+                this.selectedKeys = obj.selectedKeys
+                this.$emit('select', obj)
+            },
+            openChange: this.onOpenChange
+        }
+
+        const menuTree = menu.map(item => {
+            if(item.hidden) {
+                return null
+            }
+            return this.renderItem(item)
+        })
+
+        return (
+            <Menu vModel={this.selectedKeys} {...{ props, on: on }}>
+                {menuTree}
+            </Menu>
+        )
     }
 }

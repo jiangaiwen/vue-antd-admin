@@ -50,7 +50,7 @@ export default {
                         this.loading = false;
                         if(res.success){
                             this.$store.dispatch('user/getInfo');
-                            this.$router.push("/")
+                            this.$router.push({path: "/"})
                         }else{
                             this.$notification[ 'error' ]({
                                 message: '登录失败',
@@ -62,7 +62,6 @@ export default {
                     
                 } else {
                     this.loading = false;
-                    console.log('error submit!!');
                     return false
                 }
             })

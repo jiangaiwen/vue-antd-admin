@@ -1,5 +1,5 @@
 <template>
     <div>
-        监控页
+        animation
     </div>
 </template>

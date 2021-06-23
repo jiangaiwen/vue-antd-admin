@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Layout from "@/layouts/index";
-import BlankLayout from '@/layouts/empty';
 
 Vue.use(Router)
 
@@ -11,39 +10,37 @@ export const constantRoutes = [
 		name: 'login',
 		component: () => import("@/views/user/login"),
 		hidden: true
-    }, 
-    {
-        path: '/',
-        name: 'home',
+    }, {
+        path: '',
         component: Layout,
-        meta: { title: '首页' },
-        redirect: '/dashboard/analysis',
+        redirect: '/',
         children: [{
-            path: '/dashboard',
+            path: '/',
             name: 'dashboard',
-            redirect: '/dashboard/workplace',
-            component: BlankLayout,
-            meta: { title: '仪表盘', icon: 'dashboard' },
-            children: [
-                {
-                    path: '/dashboard/analysis',
-                    name: 'Analysis',
-                    component: () => import('@/views/dashboard/Analysis'),
-                    meta: { title: '分析页' }
-                },{
-                    path: '/dashboard/monitor',
-                    name: 'Monitor',
-                    component: () => import('@/views/dashboard/Monitor'),
-                    meta: { title: '监控页' }
-                },{
-                    path: '/dashboard/workplace',
-                    name: 'Workplace',
-                    component: () => import('@/views/dashboard/Workplace'),
-                    meta: { title: '工作台' }
-                }
-            ]
+            component: () => import('@/views/dashboard'),
+            meta: { title: '仪表盘', icon: 'dashboard', affix: true }
         }]
-    }
+    }, {
+		path: "/echarts",
+		component: Layout,
+		meta: { title: "echarts", icon: "component" },
+		children: [{
+			path: "bar",
+			component: () => import("@/views/echarts/bar"),
+			name: "bar",
+			meta: { title: "bar", icon: "star" }
+		}, {
+			path: "line",
+			component: () => import("@/views/echarts/line"),
+			name: "line",
+			meta: { title: "line", icon: "star" }
+		}, {
+			path: "pie",
+			component: () => import("@/views/echarts/pie"),
+			name: "pie",
+			meta: { title: "pie", icon: "star" }
+		}]
+	}
 ]
 
 export const asyncRoutes = []

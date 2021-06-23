@@ -10,7 +10,6 @@ NProgress.configure({ showSpinner: false })// NProgress Configuration
 
 router.beforeEach(async (to, from, next) => {
     NProgress.start()
-    
     // 判断用户有没有登录
     if(!Vue.ls.get('ACCESS_TOKEN')){
         if(to.name === 'login'){
@@ -22,7 +21,7 @@ router.beforeEach(async (to, from, next) => {
         if(store.getters.permission_routes.length == 0){ //不加这个判断，路由会陷入死循环
             await store.dispatch('user/getInfo');
             const { data } = await getRouter();
-            console.log('路由==',data);
+            
             var accessRoutes = navTree(data)
                 accessRoutes = accessRoutes.sort(compare('order'));
                 for(var i in accessRoutes){

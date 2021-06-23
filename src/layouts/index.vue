@@ -2,7 +2,14 @@
     <div class="ant-admin-wrapper">
         <a-layout class="ant-basic-layout has-sider">
             <div class="ant-pro-fixed-stuff" :style="{width: sidebarWidth, overflow: 'hidden'}"></div>
-            <Sidebar></Sidebar>
+            <Sidebar
+                mode="inline"
+                :menus="permission_routes"
+                @menuSelect="menuSelect"
+                :theme="navTheme"
+                :collapsed="collapsed"
+                :collapsible="true"
+            ></Sidebar>
             <a-layout>
                 <Navbar></Navbar>
                 <a-layout-content class="ant-basic-layout-content">
@@ -15,17 +22,33 @@
 <script>
 import { mapGetters } from 'vuex';
 import { Navbar, Sidebar } from './components';
+import { mixin, mixinDevice } from '@/utils/mixin'
 export default {
+    data() {
+        return {
+            activeMenu: {}
+        }
+    },
     components: {
         Navbar,
         Sidebar
     },
+    mixins: [mixin, mixinDevice],
     computed: {
         ...mapGetters([
+            'permission_routes',
             'sidebar'
         ]),
-        sidebarWidth(){
+        sidebarWidth() {
             return this.sidebar.opened ? '208px' : '48px'
+        },
+        collapsed() {
+            return this.sidebar.opened
+        }
+    },
+    methods: {
+        menuSelect(value) {
+            // 
         }
     }
 }

@@ -41,7 +41,7 @@ const actions = {
     },
     getInfo({ commit, state }) {
         return new Promise((resolve, reject) => {
-            console.log('sss',Vue.ls.get('USER_NAME'));
+            
             getUserInfo({
                 name: Vue.ls.get('USER_NAME')
             }).then(res => {
@@ -54,7 +54,7 @@ const actions = {
                 
                 commit('SET_NAME', res.data.nickName)
                 commit('SET_AVATAR', res.data.avatar)
-                Vue.ls.set('USER_NAME', res.data.nickName, 7 * 24 * 60 * 60 * 1000)
+                Vue.ls.set('USER_NAME', res.data.name, 7 * 24 * 60 * 60 * 1000)
                 resolve(res)
             }).catch(error => {
                 reject(error)

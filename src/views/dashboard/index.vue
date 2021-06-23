@@ -1,13 +1,20 @@
 <template>
     <div class="analysis">
         <div :style="{ marginBottom: '24px' }">
+            <h3 class="setting-drawer-index-title">风格配色</h3>
+            <div style="height: 20px">
+                <a-switch checked-children="暗色" un-checked-children="白色" :defaultChecked="this.navTheme === 'dark' && true || false" @change="onChangeTheme" />
+            </div>
+        </div>
+
+        <div :style="{ marginBottom: '24px' }">
             <h3 class="setting-drawer-index-title">主题色</h3>
             <div style="height: 20px">
                 <a-tooltip class="setting-drawer-theme-color-colorBlock" v-for="(item, index) in colorList" :key="index">
                     <template slot="title">
                         {{ item.key }}
                     </template>
-                    <a-tag :color="item.color" @click="changeColor(item.color)">
+                    <a-tag :color="item.color" @click="onChangeColor(item.color)">
                         <a-icon type="check" v-if="item.color === primaryColor"></a-icon>
                     </a-tag>
                 </a-tooltip>
@@ -54,7 +61,14 @@ export default {
         this.getUserList();
     },
     methods: {
-        changeColor(color) {
+        onChangeTheme(checked) {
+            if (checked) {
+                this.$store.dispatch('app/ToggleTheme',  'dark')
+            } else {
+                this.$store.dispatch('app/ToggleTheme',  'light')
+            }
+        },
+        onChangeColor(color) {
             if(this.primaryColor !== color) {
                 this.$store.dispatch('app/ToggleColor', color)
                 updateTheme(color)

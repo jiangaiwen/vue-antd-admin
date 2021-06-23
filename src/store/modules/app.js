@@ -1,10 +1,11 @@
+import Vue from 'vue';
 const state = {
     sidebar: {
         opened: true,
         withoutAnimation: false
     },
     device: 'desktop',
-    theme: '',
+    theme: 'dark',
     layout: '',
     contentWidth: '',
     fixedHeader: false,
@@ -44,6 +45,7 @@ const mutations = {
         state.contentWidth = type
     },
     TOGGLE_COLOR: (state, color) => {
+        Vue.ls.set('DEFAULT_COLOR', color)
         state.color = color
     },
     SET_MULTI_PAGE (state, multipageFlag) {

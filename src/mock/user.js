@@ -53,6 +53,10 @@ export default {
         var arr = option.url.split('?');
         var arr2 = arr[1].split('=');
 
+        if(arr2[1].indexOf('%') != -1){
+            arr2[1] = decodeURI(arr2[1])
+        }
+         
         const founded = users.find((v)=>v.name == arr2[1])
 
         if (!founded) {
