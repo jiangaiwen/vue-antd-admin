@@ -1,3 +1,5 @@
 <template>
-    <div>bar</div>
+    <section class="page">
+        bar
+    </section>
 </template>
