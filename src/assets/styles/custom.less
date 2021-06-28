@@ -2,8 +2,7 @@ section.page{
     position: relative;
     width: 100%;
     height: 100%;
-    padding: 20px;
-    color: $text;
+    color: #666;
     & > .container {
         position: relative;
         width: 100%;
@@ -21,18 +20,39 @@ section.page{
                 color: #666;
             }
         }
-        .slotName{
-            display: inline-block;
-            color: #409EFF;
-            font-weight: 400;
-            cursor: pointer;
-            border-radius: 4px;
-            padding: 0 6px;
-            text-decoration: underline;
-            &:hover{
-                text-decoration: none;
-                background-color: #409EFF;
-                color: #fff;
+
+        .search-wrapper{
+            .ant-form-inline{
+                .ant-form-item{
+                    display: flex;
+                    margin-bottom: 15px;
+                    margin-right: 0;
+                    &-label{
+                        padding-right: 8px;
+                        width: auto;
+                    }
+                    &-control-wrapper{
+                        flex: 1 1;
+                        display: inline-block;
+                        vertical-align: middle;
+                    }
+                }
+            }
+
+            .page-search-submitButtons{
+                display: block;
+                margin-bottom: 20px;
+                white-space: nowrap;
+            }
+        }
+
+        .operator-wrapper{
+            margin-bottom: 18px;
+            .ant-btn{
+                margin-right: 8px;
+                &:last-child{
+                    margin-right: 0;
+                }
             }
         }
 
