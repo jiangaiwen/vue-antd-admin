@@ -1,15 +1,21 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Layout from "@/layouts/index";
+import UserLayout from '@/layouts/user';
 
 Vue.use(Router)
 
 export const constantRoutes = [
     {
-        path: "/login",
-		name: 'login',
-		component: () => import("@/views/user/login"),
-		hidden: true
+        path: "/user",
+		component: UserLayout,
+		redirect: '/user/login',
+		hidden: true,
+		children: [{
+			path: "/login",
+			name: 'login',
+			component: () => import("@/views/user/login")
+		}]
     }, {
         path: '',
         component: Layout,
