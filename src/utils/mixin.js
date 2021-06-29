@@ -7,13 +7,22 @@ const mixin = {
             navTheme: state => state.app.theme,
             primaryColor: state => state.app.color,
             colorWeak: state => state.app.weak,
-            multipage: state => state.app.multipage,//多页签设置
+            multiTab: state => state.app.multiTab,//多页签设置
             fixedHeader: state => state.app.fixedHeader,
             fixSiderbar: state => state.app.fixSiderbar,
+            fixSidebar: state => state.app.fixSiderbar,
             contentWidth: state => state.app.contentWidth,
             autoHideHeader: state => state.app.autoHideHeader,
             sidebarOpened: state => state.app.sidebar.opened
         })
+    },
+    methods: {
+        isTopMenu() {
+            return this.layoutMode === 'topmenu'
+        },
+        isSideMenu() {
+            return !this.isTopMenu()
+        }
     }
 }
 

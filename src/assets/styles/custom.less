@@ -65,3 +65,71 @@ section.page{
         }
     }
 }
+
+    // 外置的样式控制
+.user-dropdown-menu {
+    span {
+        user-select: none;
+    }
+}
+.user-dropdown-menu-wrapper.ant-dropdown-menu {
+    padding: 4px 0;
+
+    .ant-dropdown-menu-item {
+        width: 160px;
+    }
+
+    .ant-dropdown-menu-item > .anticon:first-child,
+    .ant-dropdown-menu-item > a > .anticon:first-child,
+    .ant-dropdown-menu-submenu-title > .anticon:first-child .ant-dropdown-menu-submenu-title > a > .anticon:first-child {
+        min-width: 12px;
+        margin-right: 8px;
+    }
+}
+
+    // 数据列表 样式
+.table-alert {
+    margin-bottom: 16px;
+}
+
+.table-page-search-wrapper {
+    .ant-form-inline {
+        .ant-form-item {
+            display: flex;
+            margin-bottom: 24px;
+            margin-right: 0;
+
+            .ant-form-item-control-wrapper {
+                flex: 1 1;
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            > .ant-form-item-label {
+                line-height: 32px;
+                padding-right: 8px;
+                width: auto;
+            }
+            .ant-form-item-control {
+                height: 32px;
+                line-height: 32px;
+            }
+        }
+    }
+
+    .table-page-search-submitButtons {
+        display: block;
+        margin-bottom: 24px;
+        white-space: nowrap;
+    }
+ }
+
+.content {
+    .table-operator {
+        margin-bottom: 18px;
+
+        button {
+            margin-right: 8px;
+        }
+    }
+}

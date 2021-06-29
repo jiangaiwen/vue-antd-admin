@@ -61,6 +61,7 @@ const actions = {
         return new Promise(resolve => {
             let accessedRoutes = recursionRouter(accessRoutes, asyncRoutes)
             router.addRoutes(accessedRoutes)
+            
             commit('SET_ROUTES', accessRoutes)
             resolve(accessedRoutes)
         })

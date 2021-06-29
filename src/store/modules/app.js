@@ -1,100 +1,114 @@
 import Vue from 'vue';
-const state = {
-    sidebar: {
-        opened: true,
-        withoutAnimation: false
-    },
-    device: 'desktop',
-    theme: 'dark',
-    layout: '',
-    contentWidth: '',
-    fixedHeader: false,
-    fixSiderbar: false,
-    autoHideHeader: false,
-    color: null,
-    multipage: true //默认多页签模式
-}
+import {
+    SIDEBAR_TYPE,
+    DEFAULT_THEME,
+    DEFAULT_LAYOUT_MODE,
+    DEFAULT_COLOR,
+    DEFAULT_FIXED_HEADER,
+    DEFAULT_FIXED_SIDEMENU,
+    DEFAULT_FIXED_HEADER_HIDDEN,
+    DEFAULT_CONTENT_WIDTH_TYPE,
+    DEFAULT_MULTI_TAB
+} from '@/store/mutation-types'
 
-const mutations = {
-    SET_SIDEBAR_TYPE: (state, type) => {
-        state.sidebar.opened = type
+const app = {
+    state: {
+        sidebar: {
+            opened: true
+        },
+        device: 'desktop',
+        theme: 'dark',
+        layout: '',
+        contentWidth: '',
+        fixedHeader: false,
+        fixSiderbar: false,
+        autoHideHeader: false,
+        color: null,
+        multiTab: true //默认多页签模式
     },
-    CLOSE_SIDEBAR: (state, withoutAnimation) => {
-        state.sidebar.opened = false
-        state.sidebar.withoutAnimation = withoutAnimation
-    },
-    TOGGLE_DEVICE: (state, device) => {
-        state.device = device
-    },
-    TOGGLE_THEME: (state, theme) => {
-        state.theme = theme
-    },
-    TOGGLE_LAYOUT_MODE: (state, layout) => {
-        state.layout = layout
-    },
-    TOGGLE_FIXED_HEADER: (state, fixed) => {
-        state.fixedHeader = fixed
-    },
-    TOGGLE_FIXED_SIDERBAR: (state, fixed) => {
-        state.fixSiderbar = fixed
-    },
-    TOGGLE_FIXED_HEADER_HIDDEN: (state, show) => {
-        state.autoHideHeader = show
-    },
-    TOGGLE_CONTENT_WIDTH: (state, type) => {
-        state.contentWidth = type
-    },
-    TOGGLE_COLOR: (state, color) => {
-        Vue.ls.set('DEFAULT_COLOR', color)
-        state.color = color
-    },
-    SET_MULTI_PAGE (state, multipageFlag) {
-        state.multipage = multipageFlag
-    }
-}
-
-const actions = {
-    setSidebar: ({ commit }, type) => {
-        commit('SET_SIDEBAR_TYPE', type)
-    },
-    CloseSidebar({ commit }, { withoutAnimation }) {
-        commit('CLOSE_SIDEBAR', withoutAnimation)
-    },
-    ToggleDevice({ commit }, device) {
-        commit('TOGGLE_DEVICE', device)
-    },
-    ToggleTheme({ commit }, theme) {
-        commit('TOGGLE_THEME', theme)
-    },
-    ToggleLayoutMode({ commit }, mode) {
-        commit('TOGGLE_LAYOUT_MODE', mode)
-    },
-    ToggleFixedHeader({ commit }, fixedHeader) {
-        if (!fixedHeader) {
-            commit('TOGGLE_FIXED_HEADER_HIDDEN', false)
+    mutations: {
+        SET_SIDEBAR_TYPE: (state, type) => {
+            state.sidebar.opened = type
+            Vue.ls.set(SIDEBAR_TYPE, type)
+        },
+        CLOSE_SIDEBAR: (state) => {
+            Vue.ls.set(SIDEBAR_TYPE, true)
+            state.sidebar.opened = false
+        },
+        TOGGLE_DEVICE: (state, device) => {
+            state.device = device
+        },
+        TOGGLE_THEME: (state, theme) => {
+            Vue.ls.set(DEFAULT_THEME, theme)
+            state.theme = theme
+        },
+        TOGGLE_LAYOUT_MODE: (state, layout) => {
+            Vue.ls.set(DEFAULT_LAYOUT_MODE, layout)
+            state.layout = layout
+        },
+        TOGGLE_FIXED_HEADER: (state, fixed) => {
+            Vue.ls.set(DEFAULT_FIXED_HEADER, fixed)
+            state.fixedHeader = fixed
+        },
+        TOGGLE_FIXED_SIDERBAR: (state, fixed) => {
+            Vue.ls.set(DEFAULT_FIXED_SIDEMENU, fixed)
+            state.fixSiderbar = fixed
+        },
+        TOGGLE_FIXED_HEADER_HIDDEN: (state, show) => {
+            Vue.ls.set(DEFAULT_FIXED_HEADER_HIDDEN, show)
+            state.autoHideHeader = show
+        },
+        TOGGLE_CONTENT_WIDTH: (state, type) => {
+            Vue.ls.set(DEFAULT_CONTENT_WIDTH_TYPE, type)
+            state.contentWidth = type
+        },
+        TOGGLE_COLOR: (state, color) => {
+            Vue.ls.set(DEFAULT_COLOR, color)
+            state.color = color
+        },
+        TOGGLE_MULTI_TAB (state, bool) {
+            Vue.ls.set(DEFAULT_MULTI_TAB, bool)
+            state.multiTab = bool
         }
-        commit('TOGGLE_FIXED_HEADER', fixedHeader)
     },
-    ToggleFixSiderbar({ commit }, fixSiderbar) {
-        commit( 'TOGGLE_FIXED_SIDERBAR', fixSiderbar)
-    },
-    ToggleFixedHeaderHidden({ commit }, show) {
-        commit('TOGGLE_FIXED_HEADER_HIDDEN', show)
-    },
-    ToggleContentWidth({ commit }, type) {
-        commit('TOGGLE_CONTENT_WIDTH', type)
-    },
-    ToggleColor({ commit }, color) {
-        commit('TOGGLE_COLOR', color)
-    },
-    ToggleMultipage({ commit }, multipageFlag) {
-        commit('SET_MULTI_PAGE', multipageFlag)
+    actions: {
+        setSidebar: ({ commit }, type) => {
+            commit('SET_SIDEBAR_TYPE', type)
+        },
+        CloseSidebar({ commit }) {
+            commit('CLOSE_SIDEBAR')
+        },
+        ToggleDevice({ commit }, device) {
+            commit('TOGGLE_DEVICE', device)
+        },
+        ToggleTheme({ commit }, theme) {
+            commit('TOGGLE_THEME', theme)
+        },
+        ToggleLayoutMode({ commit }, mode) {
+            commit('TOGGLE_LAYOUT_MODE', mode)
+        },
+        ToggleFixedHeader({ commit }, fixedHeader) {
+            if (!fixedHeader) {
+                commit('TOGGLE_FIXED_HEADER_HIDDEN', false)
+            }
+            commit('TOGGLE_FIXED_HEADER', fixedHeader)
+        },
+        ToggleFixSiderbar({ commit }, fixSiderbar) {
+            commit( 'TOGGLE_FIXED_SIDERBAR', fixSiderbar)
+        },
+        ToggleFixedHeaderHidden({ commit }, show) {
+            commit('TOGGLE_FIXED_HEADER_HIDDEN', show)
+        },
+        ToggleContentWidth({ commit }, type) {
+            commit('TOGGLE_CONTENT_WIDTH', type)
+        },
+        ToggleColor({ commit }, color) {
+            commit('TOGGLE_COLOR', color)
+        },
+        ToggleMultiTab({ commit }, multiTabFlag) {
+            commit('TOGGLE_MULTI_TAB', multiTabFlag)
+        }
     }
 }
 
-export default {
-    namespaced: true,
-    state,
-    mutations,
-    actions
-};
+export default app

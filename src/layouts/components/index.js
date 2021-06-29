@@ -1,3 +1,3 @@
-export { default as Navbar } from './Navbar';
-export { default as Sidebar } from './Sidebar';
+export { default as Header } from './Header';
+export { default as SideMenu } from './SideMenu';
 export { default as TagsView } from './TagsView';

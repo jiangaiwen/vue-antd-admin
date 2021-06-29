@@ -1,18 +1,21 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Storage from 'vue-ls'
 import router from './router'
-import axios from 'axios'
 import store from './store'
+import axios from 'axios'
+import VueStorage from 'vue-ls';
+import config from '@/config/defaultSettings';
+// mock
+// WARNING: `mockjs` NOT SUPPORT `IE` PLEASE DO NOT USE IN `production` ENV.
+import './mock'
+
+import bootstrap from './plugins/bootstrap'
 import './plugins'
 import "./permission"
-import './mock'
 import './assets/styles/index.less'
 
-import config from '@/config/defaultSettings'
-
 Vue.config.productionTip = false
-Vue.use(Storage, config.storageOptions)
+Vue.use(VueStorage, config.storageOptions)
 
 let startApp = function() {
   axios.get('/config.json').then((res) => {
@@ -20,9 +23,7 @@ let startApp = function() {
     new Vue({
       router,
       store,
-      mounted() {
-        store.dispatch('app/ToggleColor', Vue.ls.get('DEFAULT_COLOR', config.primaryColor))
-      },
+      created: bootstrap,
       render: h => h(App)
     }).$mount('#app')
   })

@@ -5,13 +5,14 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { getRouter } from '@/api';
 import { navTree, compare } from './utils';
+import { ACCESS_TOKEN } from '@/store/mutation-types'
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
 
 router.beforeEach(async (to, from, next) => {
     NProgress.start()
     // 判断用户有没有登录
-    if(!Vue.ls.get('ACCESS_TOKEN')){
+    if(!Vue.ls.get(ACCESS_TOKEN)){
         if(to.name === 'login'){
             next()
         }else if (to.name !== 'login'){
@@ -19,7 +20,7 @@ router.beforeEach(async (to, from, next) => {
         }
     }else{// 用户已经登录
         if(store.getters.permission_routes.length == 0){ //不加这个判断，路由会陷入死循环
-            await store.dispatch('user/getInfo');
+            await store.dispatch('getInfo');
             const { data } = await getRouter();
             
             var accessRoutes = navTree(data)
@@ -29,7 +30,7 @@ router.beforeEach(async (to, from, next) => {
                         accessRoutes[i].children = accessRoutes[i].children.sort(compare('order'));
                     }
                 }
-
+                    
             await store.dispatch('permission/generateRoutes', accessRoutes)
             next({ ...to, replace: true })
         }else{

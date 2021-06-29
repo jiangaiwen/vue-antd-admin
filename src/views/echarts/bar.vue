@@ -159,77 +159,7 @@ export default {
                 }
             }],
             // 数据源
-            dataSource:[{
-                title: '111',
-                name: '222',
-                content: '333',
-                type: 2
-            },{
-                title: '111',
-                name: '222',
-                content: '333',
-                type: 2
-            },{
-                title: '111',
-                name: '222',
-                content: '333',
-                type: 2
-            },{
-                title: '111',
-                name: '222',
-                content: '333',
-                type: 2
-            },{
-                title: '111',
-                name: '222',
-                content: '333',
-                type: 2
-            },{
-                title: '111',
-                name: '222',
-                content: '333',
-                type: 2
-            },{
-                title: '111',
-                name: '222',
-                content: '333',
-                type: 2
-            },{
-                title: '111',
-                name: '222',
-                content: '333',
-                type: 2
-            },{
-                title: '111',
-                name: '222',
-                content: '333',
-                type: 2
-            },{
-                title: '111',
-                name: '222',
-                content: '333',
-                type: 2
-            },{
-                title: '111',
-                name: '222',
-                content: '333',
-                type: 2
-            },{
-                title: '111',
-                name: '222',
-                content: '333',
-                type: 2
-            },{
-                title: '111',
-                name: '222',
-                content: '333',
-                type: 2
-            },{
-                title: '111',
-                name: '222',
-                content: '333',
-                type: 2
-            }],
+            dataSource:[],
             // 分页
             pagination: {
                 current: 1,
@@ -260,7 +190,16 @@ export default {
         },
         // 查询数据
         queryData(){
-
+            this.dataSource = []
+            for (let index = 0; index < 100; index++) {
+                this.dataSource.push({
+                    id: index,
+                    title: '标题'+index,
+                    name: '名称'+index,
+                    content: '这是内容这是内容这是内容',
+                    type: 2
+                })
+            }
         },
         // 重置
         queryReset(){

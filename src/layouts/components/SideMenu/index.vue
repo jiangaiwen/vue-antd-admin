@@ -1,27 +1,29 @@
 <template>
     <a-layout-sider 
-        class="ant-sider-fixed" :style="{
-        overflow: 'hidden', 
-        flex: `0 0 ${sidebarWidth}`, 
-        maxWidth: sidebarWidth, 
-        minWidth: sidebarWidth, 
-        width: sidebarWidth}"
+        :class="['sider', isDesktop() ? null : 'shadow', theme, fixSiderbar ? 'ant-fixed-sidemenu' : null ]"
+        width="256px"
+        :collapsible="collapsible"
+        v-model="collapsed"
+        :trigger="null"
     >
+        <logo />
         <side-menu
             :collapsed="collapsed"
             :menu="menus"
             :theme="theme"
-            @select="onSelect"
             :mode="mode"
             :style="smenuStyle"
+            @select="onSelect"
         ></side-menu>
     </a-layout-sider>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import Logo from '../Header/Logo';
 import SideMenu from './SideMenu';
+import { mixin, mixinDevice } from '@/utils/mixin';
 export default {
-    components: { SideMenu },
+    components: { Logo, SideMenu },
+    mixins: [mixin, mixinDevice],
     props: {
         mode: {
             type: String,
@@ -49,12 +51,6 @@ export default {
         }
     },
     computed: {
-        ...mapGetters([
-            'sidebar'
-        ]),
-        sidebarWidth() { 
-            return this.sidebar.opened ? '208px' : '48px'
-        },
         smenuStyle() {
             let style = { 'padding': '0' }
             // if (this.fixSiderbar) {

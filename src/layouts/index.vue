@@ -1,28 +1,42 @@
 <template>
-    <div class="ant-admin-wrapper">
-        <a-layout class="ant-basic-layout has-sider">
-            <div class="ant-pro-fixed-stuff" :style="{width: sidebarWidth, overflow: 'hidden'}"></div>
-            <Sidebar
-                mode="inline"
+    <a-layout :class="['layout', device]">
+
+        <side-menu
+            mode="inline"
+            :menus="permission_routes"
+            :theme="navTheme"
+            :collapsed="collapsed"
+            :collapsible="true"
+            @menuSelect="menuSelect"
+        ></side-menu>
+
+        <a-layout :class="[layoutMode, `content-width-${contentWidth}`]" :style="{ paddingLeft: contentPaddingLeft, minHeight: '100vh' }">
+            <!-- layout header -->
+            <Header
+                :mode="layoutMode"
                 :menus="permission_routes"
-                @menuSelect="menuSelect"
                 :theme="navTheme"
                 :collapsed="collapsed"
-                :collapsible="true"
-            ></Sidebar>
-            <a-layout>
-                <Navbar></Navbar>
-                <a-layout-content class="ant-basic-layout-content">
+                :device="device"
+                @toggle="toggle"
+            ></Header>
+
+            <!-- layout content -->
+            <a-layout-content :style="{ height: '100%', margin: '24px 24px 0', paddingTop: fixedHeader ? '64px' : '0' }">
+                <transition name="page-transition">
                     <router-view />
-                </a-layout-content>
-            </a-layout>
+                </transition>
+            </a-layout-content>
+
+            <!-- layout footer -->
         </a-layout>
-    </div>
+    </a-layout>
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { Navbar, Sidebar } from './components';
-import { mixin, mixinDevice } from '@/utils/mixin'
+import { Header, SideMenu } from './components';
+import { mixin, mixinDevice } from '@/utils/mixin';
+import { triggerWindowResizeEvent } from '@/utils';
 export default {
     data() {
         return {
@@ -30,8 +44,8 @@ export default {
         }
     },
     components: {
-        Navbar,
-        Sidebar
+        Header,
+        SideMenu
     },
     mixins: [mixin, mixinDevice],
     computed: {
@@ -39,8 +53,15 @@ export default {
             'permission_routes',
             'sidebar'
         ]),
-        sidebarWidth() {
-            return this.sidebar.opened ? '208px' : '48px'
+        contentPaddingLeft() {
+            console.log('this.sidebar.opened===', this.sidebar.opened);
+            if (!this.fixSidebar || this.isMobile()) {
+                return '0'
+            } 
+            if (this.sidebar.opened) {
+                return '256px'
+            }
+            return '80px'
         },
         collapsed() {
             return this.sidebar.opened
@@ -49,43 +70,30 @@ export default {
     methods: {
         menuSelect(value) {
             // 
+        },
+        toggle() {
+            if(this.collapsed){
+                this.$store.commit('SET_SIDEBAR_TYPE', false)
+            }else{
+                this.$store.commit('SET_SIDEBAR_TYPE', true)
+            }
+            triggerWindowResizeEvent()
         }
     }
 }
 </script>
 <style lang="less" scoped>
-.ant-admin-wrapper{
-    position: relative;
-    width: 100%;
-    height: 100%;
+.page-transition-enter {
+    opacity: 0;
+}
 
-    .ant-basic-layout{
-        position: relative;
-        width: 100%;
-        height: 100%;
+.page-transition-leave-active {
+    opacity: 0;
+}
 
-        .ant-pro-fixed-stuff{
-            flex-shrink: 0;
-            transition: width .2s;
-        }
-    }
-
-    .has-sider{
-        flex-direction: row;
-    }
-
-    .ant-sider-fixed{
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 10;
-        height: 100%;
-        box-shadow: 2px 0 8px 0 rgb(29, 35, 41, 0.05);
-    }
-
-    .ant-basic-layout-content{
-        position: relative;
-        margin: 20px;
-    }
+.page-transition-enter .page-transition-container,
+.page-transition-leave-active .page-transition-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }
 </style>

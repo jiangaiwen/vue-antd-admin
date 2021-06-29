@@ -17,12 +17,17 @@
 
             <div class="footer">
                 <div class="links">
-                    <a href="http://doc.jeecg.com" target="_blank">帮助</a>
-                    <a href="https://github.com/zhangdaiscott/jeecg-boot" target="_blank">隐私</a>
-                    <a href="https://github.com/zhangdaiscott/jeecg-boot/blob/master/LICENSE" target="_blank">条款</a>
+                    <a href="https://pro.loacg.com/" target="_blank">Pro 首页</a>
+                    <a
+                        href="https://github.com/sendya/ant-design-pro-vue"
+                        target="_blank"
+                    >
+                        <a-icon type="github" />
+                    </a>
+                    <a href="https://ant.design/" target="_blank">Ant Design</a>
                 </div>
                 <div class="copyright">
-                    Copyright &copy; 2019 <a href="http://www.jeecg.com" target="_blank">JEECG开源社区</a> 出品
+                    Copyright &copy; 2021 <span>Ant Design Vue开源社区出品</span>
                 </div>
             </div>
         </div>

@@ -2,7 +2,6 @@
  * 项目默认配置项
  * primaryColor - 默认主题色
  * navTheme - sidebar theme ['dark', 'light'] 两种主题
- * colorWeak - 色盲模式
  * layout - 整体布局方式 ['sidemenu', 'topmenu'] 两种布局
  * fixedHeader - 固定 Header : boolean
  * fixSiderbar - 固定左侧菜单栏 ： boolean
@@ -19,8 +18,7 @@ export default {
     fixedHeader: false, // sticky header
     fixSiderbar: false, // sticky siderbar
     autoHideHeader: false, //  auto hide header
-    colorWeak: false,
-    multipage: true, //默认多页签模式
+    multiTab: true, //默认多页签模式
     // vue-ls options
     storageOptions: {
         namespace: 'pro__', // key prefix

@@ -15,6 +15,10 @@ export const constantRoutes = [
 			path: "/login",
 			name: 'login',
 			component: () => import("@/views/user/login")
+		},{
+			path: "/register",
+			name: 'register',
+			component: () => import("@/views/user/register")
 		}]
     }, {
         path: '',
@@ -24,27 +28,32 @@ export const constantRoutes = [
             path: '/',
             name: 'dashboard',
             component: () => import('@/views/dashboard'),
-            meta: { title: '仪表盘', icon: 'dashboard', affix: true }
+            meta: { title: '仪表盘', affix: true },
+		},{
+			path: '/center',
+			name: 'center',
+			component: () => import('@/views/account/center'),
+			meta: { title: '个人中心' }
         }]
     }, {
 		path: "/echarts",
 		component: Layout,
-		meta: { title: "echarts", icon: "component" },
+		meta: { title: "echarts" },
 		children: [{
 			path: "bar",
 			component: () => import("@/views/echarts/bar"),
 			name: "bar",
-			meta: { title: "bar", icon: "star" }
+			meta: { title: "bar" }
 		}, {
 			path: "line",
 			component: () => import("@/views/echarts/line"),
 			name: "line",
-			meta: { title: "line", icon: "star" }
+			meta: { title: "line" }
 		}, {
 			path: "pie",
 			component: () => import("@/views/echarts/pie"),
 			name: "pie",
-			meta: { title: "pie", icon: "star" }
+			meta: { title: "pie" }
 		}]
 	}
 ]

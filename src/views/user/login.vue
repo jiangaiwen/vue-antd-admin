@@ -22,6 +22,7 @@
     </div>
 </template>
 <script>
+import { mapActions } from 'vuex';
 export default {
     data() {
         return {
@@ -42,15 +43,18 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['Login']),
         handleSubmit(){
             this.loading = true;
             this.$refs['form'].validate(valid => {
                 if (valid) {
-                    this.$store.dispatch("user/login", this.model).then((res) => {
+                    this.$store.dispatch("login", this.model).then((res) => {
                         this.loading = false;
                         if(res.success){
-                            this.$store.dispatch('user/getInfo');
-                            this.$router.push({path: "/"})
+                            this.$store.dispatch('getInfo');
+                            this.$router.push({
+                                path: "/"
+                            }).catch(()=>{}); //不加catch的话重新登录会报错
                         }else{
                             this.$notification[ 'error' ]({
                                 message: '登录失败',
@@ -73,3 +77,11 @@ export default {
     }
 }
 </script>
+<style lang="less" scoped>
+.login-button{
+    padding: 0 15px;
+    font-size: 16px;
+    height: 40px;
+    width: 100%;
+}
+</style>
