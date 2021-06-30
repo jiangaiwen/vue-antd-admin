@@ -13,9 +13,7 @@ import {
 
 const app = {
     state: {
-        sidebar: {
-            opened: true
-        },
+        sidebar: true,
         device: 'desktop',
         theme: 'dark',
         layout: '',
@@ -28,12 +26,12 @@ const app = {
     },
     mutations: {
         SET_SIDEBAR_TYPE: (state, type) => {
-            state.sidebar.opened = type
+            state.sidebar = type
             Vue.ls.set(SIDEBAR_TYPE, type)
         },
         CLOSE_SIDEBAR: (state) => {
             Vue.ls.set(SIDEBAR_TYPE, true)
-            state.sidebar.opened = false
+            state.sidebar = false
         },
         TOGGLE_DEVICE: (state, device) => {
             state.device = device

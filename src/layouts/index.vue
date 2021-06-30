@@ -7,7 +7,6 @@
             :theme="navTheme"
             :collapsed="collapsed"
             :collapsible="true"
-            @menuSelect="menuSelect"
         ></side-menu>
 
         <a-layout :class="[layoutMode, `content-width-${contentWidth}`]" :style="{ paddingLeft: contentPaddingLeft, minHeight: '100vh' }">
@@ -33,14 +32,15 @@
     </a-layout>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import { Header, SideMenu } from './components';
 import { mixin, mixinDevice } from '@/utils/mixin';
 import { triggerWindowResizeEvent } from '@/utils';
 export default {
     data() {
         return {
-            activeMenu: {}
+            activeMenu: {},
+            collapsed: false,
         }
     },
     components: {
@@ -50,35 +50,54 @@ export default {
     mixins: [mixin, mixinDevice],
     computed: {
         ...mapGetters([
-            'permission_routes',
-            'sidebar'
+            'permission_routes'
         ]),
         contentPaddingLeft() {
-            console.log('this.sidebar.opened===', this.sidebar.opened);
             if (!this.fixSidebar || this.isMobile()) {
                 return '0'
             } 
-            if (this.sidebar.opened) {
+            if (this.sidebarOpened) {
                 return '256px'
             }
             return '80px'
-        },
-        collapsed() {
-            return this.sidebar.opened
+        }
+    },
+    watch: {
+        sidebarOpened (val) {
+            this.collapsed = !val
+        }
+    },
+    created() {
+        this.collapsed = !this.sidebarOpened
+    },
+    mounted() {
+        const userAgent = navigator.userAgent
+        if (userAgent.indexOf('Edge') > -1) {
+            this.$nextTick(() => {
+                this.collapsed = !this.collapsed
+                setTimeout(() => {
+                    this.collapsed = !this.collapsed
+                }, 16)
+            })
         }
     },
     methods: {
-        menuSelect(value) {
-            // 
-        },
-        toggle() {
-            if(this.collapsed){
-                this.$store.commit('SET_SIDEBAR_TYPE', false)
-            }else{
-                this.$store.commit('SET_SIDEBAR_TYPE', true)
-            }
+        ...mapActions(['setSidebar']),
+        toggle () {
+            this.collapsed = !this.collapsed
+            this.setSidebar(!this.collapsed)
             triggerWindowResizeEvent()
-        }
+        },
+        paddingCalc () {
+            let left = ''
+            if (this.sidebarOpened) {
+                left = this.isDesktop() ? '256px' : '80px'
+            } else {
+                left = (this.isMobile() && '0') || ((this.fixSidebar && '80px') || '0')
+            }
+            return left
+        },
+        menuSelect(){}
     }
 }
 </script>

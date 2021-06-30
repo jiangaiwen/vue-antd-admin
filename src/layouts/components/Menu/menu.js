@@ -1,8 +1,6 @@
 import Menu from 'ant-design-vue/es/menu';
 import Icon from 'ant-design-vue/es/icon';
 
-const { Item, SubMenu } = Menu
-
 export default {
     name: 'SMenu',
     props: {
@@ -57,8 +55,8 @@ export default {
         this.updateMenu()
     },
     methods: {
+        // select menu item
         onOpenChange(openKeys) {
-
             // 在水平模式下时执行，并且不再执行后续
             if(this.mode === 'horizontal') {
                 this.openKeys = openKeys
@@ -72,6 +70,10 @@ export default {
             } else {
                 this.openKeys = latestOpenKey ? [latestOpenKey] : []
             }
+        },
+        onSelect ({ item, key, selectedKeys }) {
+            this.selectedKeys = selectedKeys
+            this.$emit('select', { item, key, selectedKeys })
         },
         updateMenu() {
             const routes = this.$route.matched.concat()
@@ -88,7 +90,11 @@ export default {
                     openKeys.push(item.path)
                 })
             }
+
+            this.collapsed ? (this.cachedOpenKeys = openKeys) : (this.openKeys = openKeys)
         },
+
+        // render
         renderItem(menu) {
             if(!menu.isHide) {
                 return menu.children && !menu.alwaysShow ? this.renderSubMenu(menu) : this.renderMenuItem(menu)
@@ -97,17 +103,17 @@ export default {
         },
         renderMenuItem(menu) {
             const tag = 'router-link'
-            let props = { to: { name: menu.title } }
+            let props = { to: { path: menu.link } }
 
             const attrs = { href: menu.link }
 
             return (
-                <Item {...{ key: menu.link }}>
+                <Menu.Item {...{ key: menu.link }}>
                     <tag {...{ props, attrs }}>
                         {this.renderIcon(menu.icon)}
                         <span>{menu.title}</span>
                     </tag>
-                </Item>
+                </Menu.Item>
             )
         },
         renderSubMenu(menu) {
@@ -116,13 +122,13 @@ export default {
                 menu.children.forEach(item => itemArr.push(this.renderItem(item)))
             }
             return (
-                <SubMenu {...{ key: menu.link }}>
+                <Menu.SubMenu {...{ key: menu.link }}>
                     <span slot="title">
                         {this.renderIcon(menu.icon)}
                         <span>{menu.title}</span>
                     </span>
                     {itemArr}
-                </SubMenu>
+                </Menu.SubMenu>
             )
         },
         renderIcon(icon) {
@@ -141,15 +147,12 @@ export default {
         const props = {
             mode: mode,
             theme: theme,
-            openKeys: this.openKeys
+            openKeys: this.openKeys,
+            selectedKeys: this.selectedKeys
         }
-
         const on = {
-            select: obj => {
-                this.selectedKeys = obj.selectedKeys
-                this.$emit('select', obj)
-            },
-            openChange: this.onOpenChange
+            openChange: this.onOpenChange,
+            select: this.onSelect
         }
 
         const menuTree = menu.map(item => {

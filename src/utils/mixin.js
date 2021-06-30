@@ -13,7 +13,7 @@ const mixin = {
             fixSidebar: state => state.app.fixSiderbar,
             contentWidth: state => state.app.contentWidth,
             autoHideHeader: state => state.app.autoHideHeader,
-            sidebarOpened: state => state.app.sidebar.opened
+            sidebarOpened: state => state.app.sidebar
         })
     },
     methods: {

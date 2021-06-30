@@ -16,6 +16,7 @@
                     <div class="header-index-wide">
                         <div class="header-index-left">
                             <logo class="top-nav-header" :show-title="device !== 'mobile'"/>
+                            <s-menu v-if="device !== 'mobile'" mode="horizontal" :menu="menus" :theme="theme" />
                             <a-icon class="trigger" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click="toggle"/>
                         </div>
                         <user-menu class="header-index-right"></user-menu>
@@ -28,6 +29,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import Logo from './Logo';
+import SMenu from '../Menu';
 import UserMenu from './UserMenu';
 import { mixin } from '@/utils/mixin';
 export default {
@@ -46,6 +48,7 @@ export default {
     },
     components: {
         Logo,
+        SMenu,
         UserMenu
     },
     props: {

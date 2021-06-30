@@ -36,22 +36,37 @@ export const constantRoutes = [
 			meta: { title: '个人中心' }
         }]
     }, {
-		path: "/echarts",
+		path: "/list",
 		component: Layout,
-		meta: { title: "echarts" },
+		meta: { title: "list" },
+		children: [{
+			path: "table-list",
+			component: () => import("@/views/list/TableList"),
+			name: "table-list",
+			meta: { title: "table-list" }
+		}, {
+			path: "basic-list",
+			component: () => import("@/views/list/BasicList"),
+			name: "basic-list",
+			meta: { title: "basic-list" }
+		}]
+	}, {
+		path: "/charts",
+		component: Layout,
+		meta: { title: "charts" },
 		children: [{
 			path: "bar",
-			component: () => import("@/views/echarts/bar"),
+			component: () => import("@/views/charts/bar"),
 			name: "bar",
 			meta: { title: "bar" }
 		}, {
 			path: "line",
-			component: () => import("@/views/echarts/line"),
+			component: () => import("@/views/charts/line"),
 			name: "line",
 			meta: { title: "line" }
 		}, {
 			path: "pie",
-			component: () => import("@/views/echarts/pie"),
+			component: () => import("@/views/charts/pie"),
 			name: "pie",
 			meta: { title: "pie" }
 		}]

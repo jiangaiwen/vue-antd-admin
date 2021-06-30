@@ -7,22 +7,22 @@
         :trigger="null"
     >
         <logo />
-        <side-menu
+        <s-menu
             :collapsed="collapsed"
             :menu="menus"
             :theme="theme"
             :mode="mode"
-            :style="smenuStyle"
             @select="onSelect"
-        ></side-menu>
+            style="padding: 16px 0px;"
+        ></s-menu>
     </a-layout-sider>
 </template>
 <script>
 import Logo from '../Header/Logo';
-import SideMenu from './SideMenu';
+import SMenu from './index'
 import { mixin, mixinDevice } from '@/utils/mixin';
 export default {
-    components: { Logo, SideMenu },
+    components: { Logo, SMenu },
     mixins: [mixin, mixinDevice],
     props: {
         mode: {
@@ -50,19 +50,8 @@ export default {
             required: true
         }
     },
-    computed: {
-        smenuStyle() {
-            let style = { 'padding': '0' }
-            // if (this.fixSiderbar) {
-            //     style['height'] = 'calc(100% - 59px)'
-            //     style['overflow'] = 'auto'
-            //     style['overflow-x'] = 'hidden'
-            // }
-            return style
-        }
-    },
     methods: {
-        onSelect(obj) {
+        onSelect (obj) {
             this.$emit('menuSelect', obj)
         }
     }
