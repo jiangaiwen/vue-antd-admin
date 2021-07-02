@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { login, getUserInfo } from '@/api';
-import { ACCESS_TOKEN } from '@/store/mutation-types'
+import { USER_NAME, ACCESS_TOKEN } from '@/store/mutation-types'
 
 const user = {
     state: {
@@ -30,7 +30,7 @@ const user = {
                     if(res.success){
                         commit('SET_NAME', username)
                         commit('SET_TOKEN', res.data.token)
-                        Vue.ls.set('USER_NAME', username, 7 * 24 * 60 * 60 * 1000)
+                        Vue.ls.set(USER_NAME, username, 7 * 24 * 60 * 60 * 1000)
                         Vue.ls.set(ACCESS_TOKEN, res.data.token, 7 * 24 * 60 * 60 * 1000)
                         reslove(res);
                     }
@@ -39,14 +39,13 @@ const user = {
                 })
             })
         },
-        getInfo({ commit, state }) {
+        getInfo({ commit }) {
             return new Promise((resolve, reject) => {
-                
                 getUserInfo({
-                    name: Vue.ls.get('USER_NAME')
+                    name: Vue.ls.get(USER_NAME)
                 }).then(res => {
                     if (!res.success) {
-                        Vue.ls.remove('USER_NAME');
+                        Vue.ls.remove(USER_NAME);
                         Vue.ls.remove(ACCESS_TOKEN);
                         location.reload();
                         reject('Verification failed, please Login again.')
@@ -54,7 +53,7 @@ const user = {
                     
                     commit('SET_NAME', res.data.nickName)
                     commit('SET_AVATAR', res.data.avatar)
-                    Vue.ls.set('USER_NAME', res.data.name, 7 * 24 * 60 * 60 * 1000)
+                    Vue.ls.set(USER_NAME, res.data.name, 7 * 24 * 60 * 60 * 1000)
                     resolve(res)
                 }).catch(error => {
                     reject(error)

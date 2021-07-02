@@ -38,6 +38,7 @@
 import { mapGetters } from 'vuex';
 import Notice from './Notice';
 import SettingDrawer from '@/components/SettingDrawer';
+import { USER_NAME, ACCESS_TOKEN } from '@/store/mutation-types'
 export default {
     components: {
         Notice,
@@ -54,12 +55,13 @@ export default {
             this.$refs.settingDrawer.showDrawer()
         },
         handleLogout(){
+            var that = this;
             this.$confirm({
                 title: '提示',
                 content: '确定要退出当前系统吗？',
                 onOk() {
-                    this.$ls.remove('USER_NAME');
-                    this.$ls.remove('ACCESS_TOKEN');
+                    that.$ls.remove(USER_NAME);
+                    that.$ls.remove(ACCESS_TOKEN);
                     window.location.reload();
                 }
             })
