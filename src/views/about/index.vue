@@ -1,7 +1,7 @@
 <template>
     <section class="page">
         <div class="container">
-            饼图
+            关于
         </div>
     </section>
 </template>

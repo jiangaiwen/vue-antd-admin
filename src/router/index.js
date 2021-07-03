@@ -55,20 +55,20 @@ export const constantRoutes = [
 		component: Layout,
 		meta: { title: "charts" },
 		children: [{
-			path: "bar",
-			component: () => import("@/views/charts/bar"),
-			name: "bar",
-			meta: { title: "bar" }
-		}, {
-			path: "line",
-			component: () => import("@/views/charts/line"),
-			name: "line",
-			meta: { title: "line" }
-		}, {
-			path: "pie",
-			component: () => import("@/views/charts/pie"),
-			name: "pie",
-			meta: { title: "pie" }
+			path: "viser-demo",
+			component: () => import("@/views/charts/viser-demo"),
+			name: "viser-demo",
+			meta: { title: "viser-demo" }
+		}]
+	}, {
+		path: "/about",
+		component: Layout,
+		meta: { title: "about" },
+		children: [{
+			path: "index",
+			component: () => import("@/views/about"),
+			name: "about",
+			meta: { title: "about" }
 		}]
 	}
 ]

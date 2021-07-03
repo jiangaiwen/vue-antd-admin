@@ -62,7 +62,7 @@
 </template>
 <script>
 import Bar from '@/components/Charts/Bar';
-import Pie from '@/components/chart/Pie'
+import Pie from '@/components/Charts/Pie';
 export default {
     data() {
         return {

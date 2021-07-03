@@ -6,9 +6,9 @@ const router = [
     { alwaysShow: null, icon: "star", id: 21, isHide: null, link: "/list/basic-list", order: 2, parentId: 2, rightCode: "basic-list", title: "标准表格" },
 
     { alwaysShow: null, icon: "pie-chart", id: 3, isHide: null, link: "/charts", order: 3, parentId: null, rightCode: "charts", title: "图表" },
-    { alwaysShow: null, icon: "star", id: 30, isHide: null, link: "/charts/bar", order: 1, parentId: 3, rightCode: "bar", title: "柱状图" },
-    { alwaysShow: null, icon: "star", id: 31, isHide: null, link: "/charts/line", order: 2, parentId: 3, rightCode: "line", title: "折线图" },
-    { alwaysShow: null, icon: "star", id: 32, isHide: null, link: "/charts/pie", order: 3, parentId: 3, rightCode: "pie", title: "饼图" },
+    { alwaysShow: null, icon: "star", id: 30, isHide: null, link: "/charts/viser-demo", order: 1, parentId: 3, rightCode: "viser-demo", title: "Viser图表" },
+
+    { alwaysShow: true, icon: "pie-chart", id: 4, isHide: null, link: "/about/index", order: 4, parentId: null, rightCode: "about", title: "关于" }
 ]
 
 export default {
